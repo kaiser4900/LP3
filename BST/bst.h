@@ -5,7 +5,7 @@
 #include<iostream>
 using namespace std;
 
-template<class K, class D>
+template<class D>
 class bst
 {
     struct node;
@@ -15,25 +15,25 @@ class bst
 
     public:
     bst() : p_root(nullptr){}
-    bool insert(const K & k, const D & d);
+    bool insert(const D & d);
     ~bst();
-    bool find(const K & k);
-    bool remove(const K & k);
+    bool find(const D & d);
+    bool remove(const D & d);
 
-    D & operator [] (const K & key);
+    D & operator [] (const D & d);
 
     private :
-    bool find(node **& n, const K & key)
+    bool find(node **& n, const D & data)
     {
         n = & p_root;
         while(*n)
         {
-            if(key == (*n)->key){return true;}
-            n = &(*n)-> p_child[key > (*n) -> key];
+            if(data == (*n)->data){return true;}
+            n = &(*n)-> p_child[data > (*n) -> data];
         }
         return false;
     }
-bool delete_bst(node **& n, const K & key)
+bool delete_bst(node **& n, const D & data)
 {
     node * save;
     node * mov;
@@ -66,15 +66,13 @@ bool delete_bst(node **& n, const K & key)
         }
 
 
-        (*n)->key = mov->key;
-        (*n)->dato = mov->dato;
+        (*n)->data = mov->data;
 
         if(save==nullptr)
             (*n)->p_child[0] = mov ->p_child [0];
         else
             save ->p_child[1] = save -> p_child[0];
         save = nullptr;
-        // eliminar cuando tenga dos hijos
     }
     return true;
 }

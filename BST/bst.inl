@@ -1,55 +1,52 @@
 #include "bst.h"
-template<class K, class D>
-struct bst<K,D>::node
+template<class D>
+struct bst<D>::node
 {
-    K key;
-    D dato;
+    D data;
     node * p_child[2];
-    node(const K & k) : key(k)
+	node * root;
+
+    node(const D & d) : data(d)
     {
-        p_child[0] = p_child[1] = nullptr;
-    }
-    node(const K & k,const D & d) : key (k), dato(d)
-    {
-        p_child[0] = p_child[1] = nullptr;
+        p_child[0] = p_child[1] = root =nullptr;
     }
     ~node() = default;
 };
-template<class K, class D>
-bool bst<K,D>::insert(const K & k, const D & d)
+template<class D>
+bool bst<D>::insert(const D & d)
 {
     node **n;
-    if(find(n,k)) return false;
-    *n = new node(k,d);
+    if(find(n,d)) return false;
+    *n = new node(d);
     return true;
 }
-template<class K, class D>
-bool bst<K,D>::find(const K & k)
+template<class D>
+bool bst<D>::find(const D & d)
 {
     node **n;
-    return (find (n,k));
+    return (find (n,d));
 }
-template<class K, class D>
-bool bst<K,D>::remove(const K & k)
+template<class D>
+bool bst<D>::remove(const D & d)
 {
     node **n;
-    if(!find(n,k)) return false;
-    return (delete_bst(n,k));
+    if(!find(n,d)) return false;
+    return (delete_bst(n,d));
 }
-template<class K, class D>
-D & bst<K,D>::operator[](const K & key)
+template<class D>
+D & bst<D>::operator[](const D & d)
 {
     node ** n;
-    if(!find(n,key))
-        *n = new node (key);
-    return (*n) -> dato;
+    if(!find(n,d))
+        *n = new node (d);
+    return (*n) -> data;
 }
-template<class K, class D>
-bst<K,D>::~bst<K, D>()
+template<class D>
+bst<D>::~bst<D>()
 {
     while(p_root != nullptr)
     {
-        remove(p_root->key);
+        remove(p_root->data);
     }
 }
 
